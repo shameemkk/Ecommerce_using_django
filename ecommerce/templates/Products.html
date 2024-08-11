@@ -1,0 +1,154 @@
+{% load static %}
+{% load chunks %}
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+<head>
+  <!-- Page Meta Tags-->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="keywords" content="">
+
+  <!-- Custom Google Fonts-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
+    rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static '/assets/images/favicon/apple-touch-icon..png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static '/assets/images/favicon/favicon-32x32..png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static '/assets/images/favicon/favicon-16x16..png' %}">
+  <link rel="mask-icon" href="{% static '/assets/images/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="{% static '/assets/css/libs.bundle.css' %}" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static '/assets/css/theme.bundle.css' %}" />
+
+  <!-- Fix for custom scrollbar if JS is disabled-->
+  <noscript>
+    <style>
+      /**
+          * Reinstate scrolling for non-JS clients
+          */
+      .simplebar-content-wrapper {
+        overflow: auto;
+      }
+    </style>
+  </noscript>
+
+  <!-- Page Title -->
+  <title>OldSkool | Bootstrap 5 HTML Template</title>
+
+</head>
+<body class="">
+
+    <!-- Navbar -->
+
+    {% include 'navbar.html' %}
+
+     <!-- / Navbar-->
+
+    <!-- Main Section-->
+    <section class="mt-0 ">
+        <!-- Page Content Goes Here -->
+        
+        <!-- Category Top Banner -->
+        <div class="py-10 bg-img-cover bg-overlay-dark position-relative overflow-hidden bg-pos-center-center rounded-0"
+            style="background-image: url({% static '/assets/images/banners/banner-category-top.jpg' %})">
+            <div class="container-fluid position-relative z-index-20" data-aos="fade-right" data-aos-delay="300">
+                <h1 class="fw-bold display-6 mb-4 text-white">Latest Arrivals</h1>
+                <div class="col-12 col-md-6">
+                    <p class="text-white mb-0 fs-5">
+                        When it's time to head out and get your Kicks on, have a look at our latest arrivals. Whether you're into Nike, Adidas, Dunks or New Balance, we really have something for everyone!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Category Top Banner -->
+
+        <div class="container-fluid" data-aos="fade-in">
+            <!-- Category Toolbar-->
+                <div class="d-flex justify-content-between items-center pt-5 pb-4 flex-column flex-lg-row">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="#">Home</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">products</li>
+                            </ol>
+                        </nav>        <h1 class="fw-bold fs-3 mb-2">New Releases (121)</h1>
+                        <p class="m-0 text-muted small">Showing 1 - 9 of 121</p>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
+                
+                       
+                    </div>
+                </div>            <!-- /Category Toolbar-->
+
+            <!-- Products-->
+             {% for product_chunks in products|chunks:3 %}
+            <div class="row g-4">
+                {% for products in product_chunks %}
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <!-- Card Product-->
+                        <div class="card border border-transparent position-relative overflow-hidden h-100 transparent">
+                            <div class="card-img position-relative">
+                                <div class="card-badges">
+                                        <span class="badge badge-card"><span class="f-w-2 f-h-2 bg-danger rounded-circle d-block me-1"></span> Sale</span>
+                                </div>
+                                <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
+                                <picture class="position-relative overflow-hidden d-block bg-light">
+                                    <img class="w-100 img-fluid position-relative z-index-10" title="" src="{{ products.image.url }}" alt="">
+                                </picture>
+                                    <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">
+                                        <button class="btn btn-quick-add"><i class="ri-add-line me-2"></i> Quick Add</button>
+                                    </div>
+                            </div>
+                            <div class="card-body px-0">
+                                <a class="text-decoration-none link-cover" href="./product.html">{{ products.tittle }}</a>
+                                <small class="text-muted d-block">{{ products.description}}</small>
+                                        <p class="mt-2 mb-0 small"><s class="text-muted">{{ products.price}}</s> <span class="text-danger">$198.66</span></p>
+                            </div>
+                        </div>
+                        <!--/ Card Product-->
+                    </div>
+                {% endfor %}
+            </div>
+              {% endfor %}
+            <!-- / Products-->
+
+            <!-- Pagination-->
+            <div class="d-flex flex-column f-w-44 mx-auto my-5 text-center">
+                <small class="text-muted">Showing 9 of 121 products</small>
+                <div class="progress f-h-1 mt-3">
+                    <div class="progress-bar bg-dark" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <a href="#" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-3 px-4 border-2">Load More</a>
+            </div>            <!-- / Pagination-->
+        </div>
+        
+        <!-- /Page Content -->
+    </section>
+    <!-- / Main Section-->
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+    <!-- / Footer-->
+    
+    
+    <!-- Theme JS -->
+    <!-- Vendor JS -->
+    <script src="{% static '/assets/js/vendor.bundle.js' %}"></script>
+    
+    <!-- Theme JS -->
+    <script src="{% static '/assets/js/theme.bundle.js' %}"></script>
+</body>
+
+</html>
