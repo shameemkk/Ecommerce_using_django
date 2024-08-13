@@ -61,17 +61,7 @@
         <!-- Page Content Goes Here -->
         
         <!-- Category Top Banner -->
-        <div class="py-10 bg-img-cover bg-overlay-dark position-relative overflow-hidden bg-pos-center-center rounded-0"
-            style="background-image: url({% static '/assets/images/banners/banner-category-top.jpg' %})">
-            <div class="container-fluid position-relative z-index-20" data-aos="fade-right" data-aos-delay="300">
-                <h1 class="fw-bold display-6 mb-4 text-white">Latest Arrivals</h1>
-                <div class="col-12 col-md-6">
-                    <p class="text-white mb-0 fs-5">
-                        When it's time to head out and get your Kicks on, have a look at our latest arrivals. Whether you're into Nike, Adidas, Dunks or New Balance, we really have something for everyone!
-                    </p>
-                </div>
-            </div>
-        </div>
+        <!-- ------------------------top Banner removed--------------- -->
         <!-- Category Top Banner -->
 
         <div class="container-fluid" data-aos="fade-in">
@@ -112,9 +102,9 @@
                                     </div>
                             </div>
                             <div class="card-body px-0">
-                                <a class="text-decoration-none link-cover" href="./product.html">{{ products.tittle }}</a>
+                                <a class="text-decoration-none link-cover" href="{% url 'details' products.id %}">{{ products.tittle }}</a>
                                 <small class="text-muted d-block">{{ products.description}}</small>
-                                        <p class="mt-2 mb-0 small"><s class="text-muted">{{ products.price}}</s> <span class="text-danger">$198.66</span></p>
+                                        <p class="mt-2 mb-0 small"><s class="text-muted">₹{{products.old_price}}</s> <span class="text-danger">₹{{products.new_price}}</span></p>
                             </div>
                         </div>
                         <!--/ Card Product-->
@@ -130,7 +120,17 @@
                 <div class="progress f-h-1 mt-3">
                     <div class="progress-bar bg-dark" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <a href="#" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-3 px-4 border-2">Load More</a>
+               <table>
+                    {% if products.has_previous %}
+                    <td> <a href="?page={{products.previous_page_number}}" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-2 px-3 border-2"> << </a> </td>
+                    {% endif %}
+                    {% for i in products.paginator.page_range %}
+                    <td> <a href="?page={{i}}" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-2 px-3 border-2">{{i}}</a> </td>
+                    {% endfor %}
+                    {% if products.has_next %}
+                    <td> <a href="?page={{products.next_page_number}}" class="btn btn-outline-dark btn-sm mt-5 align-self-center py-2 px-3 border-2"> >> </a> </td>
+                    {% endif %}
+         </table>
             </div>            <!-- / Pagination-->
         </div>
         
