@@ -93,6 +93,8 @@
                 <!-- Product Information-->
                 <div class="col-12 col-md-6 col-lg-5">
                     <div class="sticky-top top-5">
+                        <form method="post" enctype="multipart/form-data" action="{% url 'add_cart' %}">
+                          {% csrf_token %}
                         <div class="pb-3" data-aos="fade-in">
                             <div class="d-flex align-items-center mb-3">
                                 <p class="small fw-bolder text-uppercase tracking-wider text-muted m-0 me-4">KiiKii</p>
@@ -121,81 +123,19 @@
                             
                             <h1 class="mb-1 fs-2 fw-bold">{{product.tittle}}</h1>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="fs-4 m-0"><b>₹ {{product.new_price}}</p>
+                                <h2 class="fs-4 m-0">₹ {{product.new_price}}</h2>
                             </div>
+                            <!-- checking -->
+                            <div class="form-group" style=" padding-top: 20px">
+                               <input type="hidden" name="product_id" value="{{product.id}}" >
+                                <input type="number" name="quantity" class="form-control" value="1" placeholder="Quantity" style=" width : 150px;">
+
+
                             <!-- size-->
-                            <div class="border-top mt-4 mb-3 product-option">
-                                <small class="text-uppercase pt-4 d-block fw-bolder">
-                                    <span class="text-muted">Available Sizes (Mens)</span> : <span class="selected-option fw-bold"
-                                        data-pixr-product-option="size">M</span>
-                                </small>
-                                <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
-                                            <div class="form-check-option form-check-rounded">
-                                                <input 
-                                                    type="radio" 
-                                                    name="product-option-sizes" 
-                                                    value="S" 
-                                                    id="option-sizes-0">
-                                                <label for="option-sizes-0">
-                                                    
-                                                    <small>S</small>
-                                                </label>
-                                            </div>                    <div class="form-check-option form-check-rounded">
-                                                <input 
-                                                    type="radio" 
-                                                    name="product-option-sizes" 
-                                                    value="SM" 
-                                                    id="option-sizes-1">
-                                                <label for="option-sizes-1">
-                                                    
-                                                    <small>SM</small>
-                                                </label>
-                                            </div>                    <div class="form-check-option form-check-rounded">
-                                                <input 
-                                                    type="radio" 
-                                                    name="product-option-sizes" 
-                                                    value="M" 
-                                                        checked
-                                                    id="option-sizes-2">
-                                                <label for="option-sizes-2">
-                                                    
-                                                    <small>M</small>
-                                                </label>
-                                            </div>                    <div class="form-check-option form-check-rounded">
-                                                <input 
-                                                    type="radio" 
-                                                    name="product-option-sizes" 
-                                                    value="L" 
-                                                    id="option-sizes-3">
-                                                <label for="option-sizes-3">
-                                                    
-                                                    <small>L</small>
-                                                </label>
-                                            </div>                    <div class="form-check-option form-check-rounded">
-                                                <input 
-                                                    type="radio" 
-                                                    name="product-option-sizes" 
-                                                    value="Xl" 
-                                                    id="option-sizes-4">
-                                                <label for="option-sizes-4">
-                                                    
-                                                    <small>XL</small>
-                                                </label>
-                                            </div>                    <div class="form-check-option form-check-rounded">
-                                                <input 
-                                                    type="radio" 
-                                                    name="product-option-sizes" 
-                                                    value="XXL" 
-                                                    id="option-sizes-5">
-                                                <label for="option-sizes-5">
-                                                    
-                                                    <small>XXL</small>
-                                                </label>
-                                            </div>        </div>
-                            </div>
                             
+                            </div>
                             <button class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Add To Shopping Bag</button>
-                        
+                        </form>
                             <!-- Product Highlights-->
                                 <div class="my-5">
                                     <div class="row">
@@ -222,6 +162,7 @@
                             <!-- / Product Highlights-->
                         
                             <!-- Product Accordion -->
+                             
                             <div class="accordion" id="accordionProduct">
                                 <div class="accordion-item">
                                   <h2 class="accordion-header" id="headingOne">
@@ -259,7 +200,9 @@
                                 </div>
                               </div>
                             <!-- / Product Accordion-->
-                        </div>                    </div>
+                        </div>  
+                    
+                    </div>
                 </div>
                 <!-- / Product Information-->
             </div>
@@ -312,7 +255,7 @@
                                           </div>
                                   </div>
                                   <div class="card-body px-0">
-                                      <a class="text-decoration-none link-cover" href="./product.html">{ {obj.tittle} }</a>
+                                      <a class="text-decoration-none link-cover" href="./product.html">{{ i.tittle }}</a>
                                               <p class="mt-2 mb-0 small"><s class="text-muted">₹{{i.old_price}}</s> <span class="text-danger">₹{{i.new_price}}</span></p>
                                   </div>
                               </div>

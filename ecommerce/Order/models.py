@@ -4,7 +4,6 @@ from Products.models import Product
 
 # Create your models here.
 class Order(models.Model):
-    Owner=models.ForeignKey(Custemer,on_delete=models.SET_NULL,null=True,related_name='Order')
     LIVE=1
     DELETE=0
     DELETE_CHOICE=((LIVE,'Live'),(DELETE,'Delete'))
@@ -16,11 +15,12 @@ class Order(models.Model):
     STATUS_CHOICE=((ORDER_PROCESSED,'ORDER_PROCESSED'),
                    (ORDER_DELIVERD,'ORDER_DELIVERD'),
                    (ORDER_REJECTED,'ORDER_REJECTED'))
-    Order_status=models.ImageField(choices=STATUS_CHOICE,default=CART_SATGE)
+    Owner=models.ForeignKey(Custemer,on_delete=models.SET_NULL,null=True,related_name='Order')
+    Order_status=models.IntegerField(choices=STATUS_CHOICE,default=CART_SATGE)
     Created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
 class OrderItem (models.Model):
-    Product=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,related_name='added_item')
+    Product=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,related_name='added_cart')
     Quantity=models.IntegerField(default=1)
-    Owner=models.ForeignKey(Order,on_delete=models.SET_NULL,null=True,related_name='Added_item')
+    Owner=models.ForeignKey(Order,on_delete=models.SET_NULL,null=True,related_name='added_item')
