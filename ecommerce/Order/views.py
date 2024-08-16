@@ -6,7 +6,7 @@ from Order.models import Order,OrderItem,Product
 def cart_product(request):
     user=request.user
     custemer=user.custemer_profile
-    cart_obj,created=Order.objects.get_or_create(
+    cart_obj, created=Order.objects.get_or_create(
         Owner=custemer,
         Order_status=Order.CART_SATGE
         )    
@@ -35,4 +35,25 @@ def add_to_cart(request):
         else:
             ordered_item.Quantity=ordered_item.Quantity+quantity
             ordered_item.save()
+    return redirect('cart')
+
+def remove_item (request, pk):
+    item=OrderItem.objects.get(pk=pk)
+    item.delete()
+    return redirect('cart')
+
+def checkout(request):
+    user=request.user
+    custemer=user.custemer_profile
+    total=request.POST.get('total')
+    cart_obj, created=Order.objects.get_or_create(
+        Owner=custemer,
+        Order_status=Order.CART_SATGE
+        )
+    if cart_obj:
+        cart_obj.Order_status=Order.ORDER_CONFIRM
+        cart_obj.Total_price=total
+        cart_obj.save()
+    else:
+        error_msg="unable to process"
     return redirect('cart')

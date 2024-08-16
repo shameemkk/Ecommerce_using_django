@@ -1,4 +1,6 @@
 {% load static %}
+{% load multiple %}
+{% load total %}
 <!doctype html>
 <html lang="en">
 
@@ -76,6 +78,7 @@
                             </ul>
                         </nav>                        <div class="mt-5">
                             <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Your Cart</h3>
+                         
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <tbody class="border-0">
@@ -91,11 +94,12 @@
                                                 <div>
                                                     <h6 class="justify-content-between d-flex align-items-start mb-2">
                                                        {{i.Product.tittle}}
-                                                        <i class="ri-close-line ms-3"></i>
+                                                       <a href="{% url 'remove' i.id %}"> <i class="ri-close-line ms-3"></i> </a>
                                                     </h6>
+                                                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Price:{{i.Product.new_price}}</span>
                                                     <span class="d-block text-muted fw-bolder text-uppercase fs-9">Qty:{{i.Quantity}}</span>
                                                 </div>
-                                                <p class="fw-bolder text-end text-muted m-0">{{i.Product.new_price}}</p>
+                                                <p class="fw-bolder text-end text-muted m-0">{% multiple i.Quantity i.Product.new_price %} </p>
                                             </div>
                                         </div>   
                                         {% endfor %}                                     <!-- / Cart Item-->
@@ -107,22 +111,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
-                    <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
-                        <div class="pb-4 border-bottom">
-                            <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
-                                <div>
-                                    <p class="m-0 fw-bold fs-5">Grand Total</p>
-                                    <span class="text-muted small">Inc $45.89 sales tax</span>
+            
+                    <div class="col-12 col-lg-5 bg-light pt-lg-10 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
+                        <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
+                            <div class="pb-4 border-bottom">
+                                <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
+                                    <div>
+                                        <p class="m-0 fw-bold fs-5">Grand Total</p>
+                                        <span class="text-muted small">Inc sales tax</span>
+                                    </div>
+                                    <p class="m-0 fs-5 fw-bold">{% total cart %}</p>
                                 </div>
-                                <p class="m-0 fs-5 fw-bold">$422.99</p>
                             </div>
+                            <form action="{% url 'checkout' %}" method="post" enctype="multipart/form-data">  
+                                {% csrf_token %}
+                                <input type="hidden" value="{% total cart %}" name="total">
+                                <button class="btn btn-dark w-100 text-center " type="submit">Proceed to checkout</button>
+                            </form>                    
                         </div>
-                        
-                        <a href="./checkout.html" class="btn btn-dark w-100 text-center" role="button">Proceed to checkout</a>                    </div>
-                </div>
+                    </div>
+                
             </div>
         </div>
+    
         <!-- /Page Content -->
     </section>
     <!-- / Main Section-->

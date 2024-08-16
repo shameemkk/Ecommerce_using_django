@@ -3,11 +3,23 @@ from Products.models import Product
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login, logout
 from Custemer.models import Custemer
+from Order.models import Order,OrderItem
 
 # Create your views here.
 def Home_Page(request):
     featured_products=Product.objects.order_by('priority')[:4]
     return render(request,'index.html',{'product':featured_products})
+def orders(request):
+    user=request.user
+    custemer=user.custemer_profile
+    order_obj=Order.objects.filter(Owner=custemer).exclude(Order_status=Order.CART_SATGE)
+    order_items = []
+    for order in order_obj:
+        order_items.extend(OrderItem.objects.filter(Owner=order))
+    products = [item.Product for item in order_items]
+    context = {'orders': order_obj, 'products': products , 'OrderItem':order_items}
+    
+    return render(request,'orders.html',context)
 
 def custemer_registration(request):
     if request.POST:
